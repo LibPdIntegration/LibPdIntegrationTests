@@ -112,20 +112,6 @@ public class MainTestScript : MonoBehaviour {
 		mainPatch.Bind("listOut");
 		mainPatch.Bind("messageOut");
 
-		//Libpd callback functions.
-		//LibPdInstance.Bang += LibPdBangReceive;
-		//LibPdInstance.Float += LibPdFloatReceive;
-		//LibPdInstance.Symbol += LibPdSymbolReceive;
-		//LibPdInstance.List += LibPdListReceive;
-		//LibPdInstance.Message += LibPdMessageReceive;
-		//LibPdInstance.MidiNoteOn += LibPdMidiNoteReceive;
-		//LibPdInstance.MidiControlChange += LibPdMidiCcReceive;
-		//LibPdInstance.MidiProgramChange += LibPdMidiProgReceive;
-		LibPdInstance.MidiPitchBend += LibPdMidiBendReceive;
-		LibPdInstance.MidiAftertouch += LibPdMidiAftertouchReceive;
-		LibPdInstance.MidiPolyAftertouch += LibPdMidiPolyAftertouchReceive;
-		LibPdInstance.MidiByte += LibPdMidiByteReceive;
-
 		//Unity UI registration.
 		bangButton.onClick.AddListener(() => ButtonCallback(bangButton));
 		floatSlider.onValueChanged.AddListener(SliderCallback);
@@ -146,24 +132,6 @@ public class MainTestScript : MonoBehaviour {
 		spatialiseButton.onClick.AddListener(() => ButtonCallback(spatialiseButton));
 		dynamicCreationButton.onClick.AddListener(() => ButtonCallback(dynamicCreationButton));
 		automatedTestsButton.onClick.AddListener(() => ButtonCallback(automatedTestsButton));
-	}
-	
-	//--------------------------------------------------------------------------
-	// Used to clean up our callback functions.
-	void OnApplicationQuit() {
-		//Tell LibPdInstance to forget about our various receive functions.
-		//LibPdInstance.Bang -= LibPdBangReceive;
-		//LibPdInstance.Float -= LibPdFloatReceive;
-		//LibPdInstance.Symbol -= LibPdSymbolReceive;
-		//LibPdInstance.List -= LibPdListReceive;
-		//LibPdInstance.Message -= LibPdMessageReceive;
-		//LibPdInstance.MidiNoteOn -= LibPdMidiNoteReceive;
-		//LibPdInstance.MidiControlChange -= LibPdMidiCcReceive;
-		//LibPdInstance.MidiProgramChange -= LibPdMidiProgReceive;
-		LibPdInstance.MidiPitchBend -= LibPdMidiBendReceive;
-		LibPdInstance.MidiAftertouch -= LibPdMidiAftertouchReceive;
-		LibPdInstance.MidiPolyAftertouch -= LibPdMidiPolyAftertouchReceive;
-		LibPdInstance.MidiByte -= LibPdMidiByteReceive;
 	}
 	
 	//--------------------------------------------------------------------------
@@ -440,7 +408,7 @@ public class MainTestScript : MonoBehaviour {
 	
 	//--------------------------------------------------------------------------
 	// Called from LibPdInstance when we receive a MIDI pitch bend.
-	void LibPdMidiBendReceive(int channel, int value) {
+	public void LibPdMidiBendReceive(int channel, int value) {
 		WriteOutputText("MIDI Pitch Bend: ",
 						"channel = " + channel + "; value = " + value,
 						"MIDI Pitch Bend\t\t\t\t");
@@ -448,7 +416,7 @@ public class MainTestScript : MonoBehaviour {
 	
 	//--------------------------------------------------------------------------
 	// Called from LibPdInstance when we receive a MIDI aftertouch.
-	void LibPdMidiAftertouchReceive(int channel, int value) {
+	public void LibPdMidiAftertouchReceive(int channel, int value) {
 		WriteOutputText("MIDI Aftertouch: ",
 						"channel = " + channel + "; value = " + value,
 						"MIDI Aftertouch\t\t\t\t");
@@ -456,7 +424,7 @@ public class MainTestScript : MonoBehaviour {
 	
 	//--------------------------------------------------------------------------
 	// Called from LibPdInstance when we receive a MIDI aftertouch.
-	void LibPdMidiPolyAftertouchReceive(int channel, int note, int value) {
+	public void LibPdMidiPolyAftertouchReceive(int channel, int note, int value) {
 		WriteOutputText("MIDI Poly Aftertouch: ",
 						"channel = " + channel + "; note = " + note + "; value = " + value,
 						"MIDI Poly Aftertouch\t\t");
@@ -464,7 +432,7 @@ public class MainTestScript : MonoBehaviour {
 	
 	//--------------------------------------------------------------------------
 	// Called from LibPdInstance when we receive a MIDI byte (includes sysex and realtime messages).
-	void LibPdMidiByteReceive(int port, int value) {
+	public void LibPdMidiByteReceive(int port, int value) {
 		WriteOutputText("MIDI Byte: ",
 						"port = " + port + "; value = " + value,
 						"MIDI Byte\t\t\t\t\t\t");

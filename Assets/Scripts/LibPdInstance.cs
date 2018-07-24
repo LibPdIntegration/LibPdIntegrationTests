@@ -246,10 +246,8 @@ public class LibPdInstance : MonoBehaviour {
 												int n);
 	#endregion
 
-	#region delegate/libpd callback declarations
+	#region libpd delegate/callback declarations
 	//--------------------------------------------------------------------------
-	// Delegates/libpd callbacks.
-
 	//-Print hook---------------------------------------------------------------
 	// We don't make the print hook publicly available (for now), so it's just a
 	//single static delegate.
@@ -275,11 +273,6 @@ public class LibPdInstance : MonoBehaviour {
 	
 	private LibPdBangHook bangHook;
 
-	/// Public delegate for receiving bang events.
-	/*public delegate void LibPdBang(string receiver);
-	/// Bang event; subscribe to this to receive bangs.
-	public static event LibPdBang Bang = delegate{};*/
-
 	//-Float hook---------------------------------------------------------------
 	[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
 	public delegate void LibPdFloatHook([In] [MarshalAs(UnmanagedType.LPStr)] string symbol,
@@ -289,11 +282,6 @@ public class LibPdInstance : MonoBehaviour {
 	private static extern void libpd_set_floathook(LibPdFloatHook hook);
 	
 	private LibPdFloatHook floatHook;
-
-	/// Public delegate for receiving float events.
-	/*public delegate void LibPdFloat(string receiver, float val);
-	/// Float event; subscribe to this to receive floats.
-	public static event LibPdFloat Float = delegate{};*/
 
 	//-Symbol hook--------------------------------------------------------------
 	[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
@@ -305,11 +293,6 @@ public class LibPdInstance : MonoBehaviour {
 	
 	private LibPdSymbolHook symbolHook;
 
-	/// Public delegate for receiving symbol events.
-	/*public delegate void LibPdSymbol(string receiver, string val);
-	/// Symbol event; subscribe to this to receive symbols.
-	public static event LibPdSymbol Symbol = delegate{};*/
-
 	//-List hook----------------------------------------------------------------
 	[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
 	public delegate void LibPdListHook([In] [MarshalAs(UnmanagedType.LPStr)] string source,
@@ -320,11 +303,6 @@ public class LibPdInstance : MonoBehaviour {
 	private static extern void libpd_set_listhook(LibPdListHook hook);
 	
 	private LibPdListHook listHook;
-
-	/// Public delegate for receiving lists.
-	/*public delegate void LibPdList(string source, object[] args);
-	/// List event; subscribe to this to receive lists.
-	public static event LibPdList List = delegate{};*/
 
 	//-Message hook-------------------------------------------------------------
 	[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
@@ -338,13 +316,6 @@ public class LibPdInstance : MonoBehaviour {
 	
 	private LibPdMessageHook messageHook;
 
-	/// Public delegate for receiving messages.
-	/*public delegate void LibPdMessage(string source,
-									  string symbol,
-									  object[] args);
-	/// Message event; subscribe to this to messages.
-	public static event LibPdMessage Message = delegate{};*/
-
 	//-MIDI Note On hook--------------------------------------------------------
 	[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
 	public delegate void LibPdMidiNoteOnHook(int channel,
@@ -355,11 +326,6 @@ public class LibPdInstance : MonoBehaviour {
 	private static extern void libpd_set_noteonhook(LibPdMidiNoteOnHook hook);
 
 	private LibPdMidiNoteOnHook noteOnHook;
-
-	/// Public delegate for receiving MIDI note on events.
-	/*public delegate void LibPdMidiNoteOn(int channel, int pitch, int velocity);
-	/// MIDI Note On event; subscribe to this to receive MIDI note on events.
-	public static event LibPdMidiNoteOn MidiNoteOn = delegate {};*/
 
 	//-MIDI Control Change hook-------------------------------------------------
 	[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
@@ -372,13 +338,6 @@ public class LibPdInstance : MonoBehaviour {
 
 	private LibPdMidiControlChangeHook controlChangeHook;
 
-	/// Public delegate for receiving MIDI control change events.
-	/*public delegate void LibPdMidiControlChange(int channel,
-												int controller,
-												int value);
-	/// MIDI CC event; subscribe to this to receive MIDI control change events.
-	public static event LibPdMidiControlChange MidiControlChange = delegate {};*/
-
 	//-MIDI Program Change hook-------------------------------------------------
 	[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
 	public delegate void LibPdMidiProgramChangeHook(int channel, int program);
@@ -387,11 +346,6 @@ public class LibPdInstance : MonoBehaviour {
 	private static extern void libpd_set_programchangehook(LibPdMidiProgramChangeHook hook);
 
 	private LibPdMidiProgramChangeHook programChangeHook;
-
-	/// Public delegate for receiving MIDI program change events.
-	/*public delegate void LibPdMidiProgramChange(int channel, int program);
-	/// MIDI Program Change event; subscribe to this to receive MIDI program change events.
-	public static event LibPdMidiProgramChange MidiProgramChange = delegate {};*/
 
 	//-MIDI Pitch Bend hook-----------------------------------------------------
 	[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
@@ -402,11 +356,6 @@ public class LibPdInstance : MonoBehaviour {
 
 	private LibPdMidiPitchBendHook pitchBendHook;
 
-	/// Public delegate for receiving MIDI pitch bend events.
-	public delegate void LibPdMidiPitchBend(int channel, int value);
-	/// MIDI Pitch Bend event; subscribe to this to receive MIDI pitch bend events.
-	public static event LibPdMidiPitchBend MidiPitchBend = delegate {};
-
 	//-MIDI Aftertouch hook-----------------------------------------------------
 	[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
 	public delegate void LibPdMidiAftertouchHook(int channel, int value);
@@ -415,11 +364,6 @@ public class LibPdInstance : MonoBehaviour {
 	private static extern void libpd_set_aftertouchhook(LibPdMidiAftertouchHook hook);
 
 	private LibPdMidiAftertouchHook aftertouchHook;
-
-	/// Public delegate for receiving MIDI aftertouch events.
-	public delegate void LibPdMidiAftertouch(int channel, int value);
-	/// MIDI Aftertouch event; subscribe to this to receive MIDI aftertouch events.
-	public static event LibPdMidiAftertouch MidiAftertouch = delegate {};
 
 	//-MIDI Polyphonic Aftertouch hook------------------------------------------
 	[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
@@ -430,11 +374,6 @@ public class LibPdInstance : MonoBehaviour {
 
 	private LibPdMidiPolyAftertouchHook polyAftertouchHook;
 
-	/// Public delegate for receiving MIDI polyphonic aftertouch events.
-	public delegate void LibPdMidiPolyAftertouch(int channel, int pitch, int value);
-	/// MIDI Poly Aftertouch event; subscribe to this to receive MIDI polyphonic aftertouch events.
-	public static event LibPdMidiPolyAftertouch MidiPolyAftertouch = delegate {};
-
 	//-MIDI Byte hook-----------------------------------------------------------
 	[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
 	public delegate void LibPdMidiByteHook(int channel, int value);
@@ -443,11 +382,6 @@ public class LibPdInstance : MonoBehaviour {
 	private static extern void libpd_set_midibytehook(LibPdMidiByteHook hook);
 
 	private LibPdMidiByteHook midiByteHook;
-
-	/// Public delegate for receiving MIDI byte events.
-	public delegate void LibPdMidiByte(int channel, int value);
-	/// MIDI Byte event; subscribe to this to receive MIDI byte events.
-	public static event LibPdMidiByte MidiByte = delegate {};
 	#endregion
 
 	#region member variables
@@ -514,7 +448,8 @@ public class LibPdInstance : MonoBehaviour {
 		/// UnityEvent that will be invoked whenever we recieve a message from the PD patch.
 		public StringStringObjArrEvent Message;
 	};
-	public PureDataEvents libpd2UnityEvents;
+	[Header("libpd -> Unity Events")]
+	public PureDataEvents pureDataEvents;
 	
 	/// Events placed in a struct so they don't clutter up the Inspector by default.
 	[System.Serializable]
@@ -525,8 +460,16 @@ public class LibPdInstance : MonoBehaviour {
 		public IntIntIntEvent MidiControlChange;
 		/// UnityEvent that will be invoked whenever we recieve a MIDI program change from the PD patch.
 		public IntIntEvent MidiProgramChange;
+		/// UnityEvent that will be invoked whenever we recieve a MIDI pitch bend from the PD patch.
+		public IntIntEvent MidiPitchBend;
+		/// UnityEvent that will be invoked whenever we recieve a MIDI aftertouch from the PD patch.
+		public IntIntEvent MidiAftertouch;
+		/// UnityEvent that will be invoked whenever we recieve a polyphonic MIDI aftertouch from the PD patch.
+		public IntIntIntEvent MidiPolyAftertouch;
+		/// UnityEvent that will be invoked whenever we recieve a MIDI byte from the PD patch.
+		public IntIntEvent MidiByte;
 	};
-	public MidiEvents libpd2UnityMidiEvents;
+	public MidiEvents midiEvents;
 	#endregion
 	
 	#region MonoBehaviour methods
@@ -593,23 +536,31 @@ public class LibPdInstance : MonoBehaviour {
 		else
 			pipePrintToConsole = pipePrintToConsoleStatic;
 
-		if(libpd2UnityEvents.Bang == null)
-			libpd2UnityEvents.Bang = new StringEvent();
-		if(libpd2UnityEvents.Float == null)
-			libpd2UnityEvents.Float = new StringFloatEvent();
-		if(libpd2UnityEvents.Symbol == null)
-			libpd2UnityEvents.Symbol = new StringStringEvent();
-		if(libpd2UnityEvents.List == null)
-			libpd2UnityEvents.List = new StringObjArrEvent();
-		if(libpd2UnityEvents.Message == null)
-			libpd2UnityEvents.Message = new StringStringObjArrEvent();
+		if(pureDataEvents.Bang == null)
+			pureDataEvents.Bang = new StringEvent();
+		if(pureDataEvents.Float == null)
+			pureDataEvents.Float = new StringFloatEvent();
+		if(pureDataEvents.Symbol == null)
+			pureDataEvents.Symbol = new StringStringEvent();
+		if(pureDataEvents.List == null)
+			pureDataEvents.List = new StringObjArrEvent();
+		if(pureDataEvents.Message == null)
+			pureDataEvents.Message = new StringStringObjArrEvent();
 
-		if(libpd2UnityMidiEvents.MidiNoteOn == null)
-			libpd2UnityMidiEvents.MidiNoteOn = new IntIntIntEvent();
-		if(libpd2UnityMidiEvents.MidiControlChange == null)
-			libpd2UnityMidiEvents.MidiControlChange = new IntIntIntEvent();
-		if(libpd2UnityMidiEvents.MidiProgramChange == null)
-			libpd2UnityMidiEvents.MidiProgramChange = new IntIntEvent();
+		if(midiEvents.MidiNoteOn == null)
+			midiEvents.MidiNoteOn = new IntIntIntEvent();
+		if(midiEvents.MidiControlChange == null)
+			midiEvents.MidiControlChange = new IntIntIntEvent();
+		if(midiEvents.MidiProgramChange == null)
+			midiEvents.MidiProgramChange = new IntIntEvent();
+		if(midiEvents.MidiPitchBend == null)
+			midiEvents.MidiPitchBend = new IntIntEvent();
+		if(midiEvents.MidiAftertouch == null)
+			midiEvents.MidiAftertouch = new IntIntEvent();
+		if(midiEvents.MidiPolyAftertouch == null)
+			midiEvents.MidiPolyAftertouch = new IntIntIntEvent();
+		if(midiEvents.MidiByte == null)
+			midiEvents.MidiByte = new IntIntEvent();
 
 		// Calc numTicks.
 		int bufferSize;
@@ -987,21 +938,21 @@ public class LibPdInstance : MonoBehaviour {
 	/// Receive bang messages.
 	void BangOutput(string symbol)
 	{
-		libpd2UnityEvents.Bang.Invoke(symbol);
+		pureDataEvents.Bang.Invoke(symbol);
 	}
 
 	//--------------------------------------------------------------------------
 	/// Receive float messages.
 	void FloatOutput(string symbol, float val)
 	{
-		libpd2UnityEvents.Float.Invoke(symbol, val);
+		pureDataEvents.Float.Invoke(symbol, val);
 	}
 
 	//--------------------------------------------------------------------------
 	/// Receive symbol messages.
 	void SymbolOutput(string symbol, string val)
 	{
-		libpd2UnityEvents.Symbol.Invoke(symbol, val);
+		pureDataEvents.Symbol.Invoke(symbol, val);
 	}
 
 	//--------------------------------------------------------------------------
@@ -1010,7 +961,7 @@ public class LibPdInstance : MonoBehaviour {
 	{
 		var args = ConvertList(argc, argv);
 
-		libpd2UnityEvents.List.Invoke(source, args);
+		pureDataEvents.List.Invoke(source, args);
 	}
 
 	//--------------------------------------------------------------------------
@@ -1019,56 +970,56 @@ public class LibPdInstance : MonoBehaviour {
 	{
 		var args = ConvertList(argc, argv);
 
-		libpd2UnityEvents.Message.Invoke(source, symbol, args);
+		pureDataEvents.Message.Invoke(source, symbol, args);
 	}
 
 	//--------------------------------------------------------------------------
 	///	Receive MIDI note on messages.
 	void MidiNoteOnOutput(int channel, int pitch, int velocity)
 	{
-		libpd2UnityMidiEvents.MidiNoteOn.Invoke(channel, pitch, velocity);
+		midiEvents.MidiNoteOn.Invoke(channel, pitch, velocity);
 	}
 
 	//--------------------------------------------------------------------------
 	///	Receive MIDI control change messages.
 	void MidiControlChangeOutput(int channel, int controller, int value)
 	{
-		libpd2UnityMidiEvents.MidiControlChange.Invoke(channel, controller, value);
+		midiEvents.MidiControlChange.Invoke(channel, controller, value);
 	}
 
 	//--------------------------------------------------------------------------
 	///	Receive MIDI program change messages.
 	void MidiProgramChangeOutput(int channel, int program)
 	{
-		libpd2UnityMidiEvents.MidiProgramChange.Invoke(channel, program);
+		midiEvents.MidiProgramChange.Invoke(channel, program);
 	}
 
 	//--------------------------------------------------------------------------
 	///	Receive MIDI pitch bend messages.
 	void MidiPitchBendOutput(int channel, int value)
 	{
-		MidiPitchBend(channel, value);
+		midiEvents.MidiPitchBend.Invoke(channel, value);
 	}
 
 	//--------------------------------------------------------------------------
 	///	Receive MIDI aftertouch messages.
 	void MidiAftertouchOutput(int channel, int value)
 	{
-		MidiAftertouch(channel, value);
+		midiEvents.MidiAftertouch.Invoke(channel, value);
 	}
 
 	//--------------------------------------------------------------------------
 	///	Receive MIDI polyphonic aftertouch messages.
 	void MidiPolyAftertouchOutput(int channel, int pitch, int value)
 	{
-		MidiPolyAftertouch(channel, pitch, value);
+		midiEvents.MidiPolyAftertouch.Invoke(channel, pitch, value);
 	}
 
 	//--------------------------------------------------------------------------
 	///	Receive MIDI byte messages.
 	void MidiByteOutput(int channel, int value)
 	{
-		MidiByte(channel, value);
+		midiEvents.MidiByte.Invoke(channel, value);
 	}
 	#endregion
 

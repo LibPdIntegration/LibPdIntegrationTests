@@ -50,6 +50,10 @@ public class StringObjArrEvent : UnityEvent<string, object[]> {}
 /// String + object array parameter event type (used for Message events).
 [System.Serializable]
 public class StringStringObjArrEvent : UnityEvent<string, string, object[]> {}
+
+/// Int + int + int parameter event type (used for various MIDI events).
+[System.Serializable]
+public class IntIntIntEvent : UnityEvent<int, int, int> {}
 #endregion
 
 /// <summary>
@@ -349,9 +353,9 @@ public class LibPdInstance : MonoBehaviour {
 	private LibPdMidiNoteOnHook noteOnHook;
 
 	/// Public delegate for receiving MIDI note on events.
-	public delegate void LibPdMidiNoteOn(int channel, int pitch, int velocity);
+	/*public delegate void LibPdMidiNoteOn(int channel, int pitch, int velocity);
 	/// MIDI Note On event; subscribe to this to receive MIDI note on events.
-	public static event LibPdMidiNoteOn MidiNoteOn = delegate {};
+	public static event LibPdMidiNoteOn MidiNoteOn = delegate {};*/
 
 	//-MIDI Control Change hook-------------------------------------------------
 	[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
@@ -492,6 +496,8 @@ public class LibPdInstance : MonoBehaviour {
 
 	#region events
 	//--------------------------------------------------------------------------
+	[System.Serializable]
+	public struct PureDataEvents {
 	/// UnityEvent that will be invoked whenever we recieve a bang from the PD patch.
 	public StringEvent Bang;
 	/// UnityEvent that will be invoked whenever we recieve a float from the PD patch.
@@ -502,6 +508,10 @@ public class LibPdInstance : MonoBehaviour {
 	public StringObjArrEvent List;
 	/// UnityEvent that will be invoked whenever we recieve a message from the PD patch.
 	public StringStringObjArrEvent Message;
+	};
+	public PureDataEvents libpd2UnityEvents;
+	/// UnityEvent that will be invoked whenever we recieve a MIDI note on from the PD patch.
+	public IntIntIntEvent MidiNoteOn;
 	#endregion
 	
 	#region MonoBehaviour methods
@@ -568,16 +578,18 @@ public class LibPdInstance : MonoBehaviour {
 		else
 			pipePrintToConsole = pipePrintToConsoleStatic;
 
-		if(Bang == null)
-			Bang = new StringEvent();
-		if(Float == null)
-			Float = new StringFloatEvent();
-		if(Symbol == null)
-			Symbol = new StringStringEvent();
-		if(List == null)
-			List = new StringObjArrEvent();
-		if(Message == null)
-			Message = new StringStringObjArrEvent();
+		if(libpd2UnityEvents.Bang == null)
+			libpd2UnityEvents.Bang = new StringEvent();
+		if(libpd2UnityEvents.Float == null)
+			libpd2UnityEvents.Float = new StringFloatEvent();
+		if(libpd2UnityEvents.Symbol == null)
+			libpd2UnityEvents.Symbol = new StringStringEvent();
+		if(libpd2UnityEvents.List == null)
+			libpd2UnityEvents.List = new StringObjArrEvent();
+		if(libpd2UnityEvents.Message == null)
+			libpd2UnityEvents.Message = new StringStringObjArrEvent();
+		if(MidiNoteOn == null)
+			MidiNoteOn = new IntIntIntEvent();
 
 		// Calc numTicks.
 		int bufferSize;
@@ -955,21 +967,21 @@ public class LibPdInstance : MonoBehaviour {
 	/// Receive bang messages.
 	void BangOutput(string symbol)
 	{
-		Bang.Invoke(symbol);
+		libpd2UnityEvents.Bang.Invoke(symbol);
 	}
 
 	//--------------------------------------------------------------------------
 	/// Receive float messages.
 	void FloatOutput(string symbol, float val)
 	{
-		Float.Invoke(symbol, val);
+		libpd2UnityEvents.Float.Invoke(symbol, val);
 	}
 
 	//--------------------------------------------------------------------------
 	/// Receive symbol messages.
 	void SymbolOutput(string symbol, string val)
 	{
-		Symbol.Invoke(symbol, val);
+		libpd2UnityEvents.Symbol.Invoke(symbol, val);
 	}
 
 	//--------------------------------------------------------------------------
@@ -978,7 +990,7 @@ public class LibPdInstance : MonoBehaviour {
 	{
 		var args = ConvertList(argc, argv);
 
-		List.Invoke(source, args);
+		libpd2UnityEvents.List.Invoke(source, args);
 	}
 
 	//--------------------------------------------------------------------------
@@ -987,14 +999,14 @@ public class LibPdInstance : MonoBehaviour {
 	{
 		var args = ConvertList(argc, argv);
 
-		Message.Invoke(source, symbol, args);
+		libpd2UnityEvents.Message.Invoke(source, symbol, args);
 	}
 
 	//--------------------------------------------------------------------------
 	///	Receive MIDI note on messages.
 	void MidiNoteOnOutput(int channel, int pitch, int velocity)
 	{
-		MidiNoteOn(channel, pitch, velocity);
+		MidiNoteOn.Invoke(channel, pitch, velocity);
 	}
 
 	//--------------------------------------------------------------------------

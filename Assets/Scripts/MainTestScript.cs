@@ -118,7 +118,7 @@ public class MainTestScript : MonoBehaviour {
 		//LibPdInstance.Symbol += LibPdSymbolReceive;
 		//LibPdInstance.List += LibPdListReceive;
 		//LibPdInstance.Message += LibPdMessageReceive;
-		LibPdInstance.MidiNoteOn += LibPdMidiNoteReceive;
+		//LibPdInstance.MidiNoteOn += LibPdMidiNoteReceive;
 		LibPdInstance.MidiControlChange += LibPdMidiCcReceive;
 		LibPdInstance.MidiProgramChange += LibPdMidiProgReceive;
 		LibPdInstance.MidiPitchBend += LibPdMidiBendReceive;
@@ -157,7 +157,7 @@ public class MainTestScript : MonoBehaviour {
 		//LibPdInstance.Symbol -= LibPdSymbolReceive;
 		//LibPdInstance.List -= LibPdListReceive;
 		//LibPdInstance.Message -= LibPdMessageReceive;
-		LibPdInstance.MidiNoteOn -= LibPdMidiNoteReceive;
+		//LibPdInstance.MidiNoteOn -= LibPdMidiNoteReceive;
 		LibPdInstance.MidiControlChange -= LibPdMidiCcReceive;
 		LibPdInstance.MidiProgramChange -= LibPdMidiProgReceive;
 		LibPdInstance.MidiPitchBend -= LibPdMidiBendReceive;
@@ -416,7 +416,7 @@ public class MainTestScript : MonoBehaviour {
 	
 	//--------------------------------------------------------------------------
 	// Called from LibPdInstance when we receive a MIDI Note.
-	void LibPdMidiNoteReceive(int channel, int pitch, int velocity) {
+	public void LibPdMidiNoteReceive(int channel, int pitch, int velocity) {
 		WriteOutputText("MIDI Note: ",
 						"channel = " + channel + "; note = " + pitch + "; velocity = " + velocity,
 						"MIDI Note\t\t\t\t\t\t");

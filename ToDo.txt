@@ -1,3 +1,2 @@
 LibPdIntegration Tests ToDo
 ---------------------------
-- Add licensing info.

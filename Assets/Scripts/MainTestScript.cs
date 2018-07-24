@@ -113,8 +113,8 @@ public class MainTestScript : MonoBehaviour {
 		mainPatch.Bind("messageOut");
 
 		//Libpd callback functions.
-		LibPdInstance.Bang += LibPdBangReceive;
-		LibPdInstance.Float += LibPdFloatReceive;
+		//LibPdInstance.Bang += LibPdBangReceive;
+		//LibPdInstance.Float += LibPdFloatReceive;
 		LibPdInstance.Symbol += LibPdSymbolReceive;
 		LibPdInstance.List += LibPdListReceive;
 		LibPdInstance.Message += LibPdMessageReceive;
@@ -152,8 +152,8 @@ public class MainTestScript : MonoBehaviour {
 	// Used to clean up our callback functions.
 	void OnApplicationQuit() {
 		//Tell LibPdInstance to forget about our various receive functions.
-		LibPdInstance.Bang -= LibPdBangReceive;
-		LibPdInstance.Float -= LibPdFloatReceive;
+		//LibPdInstance.Bang -= LibPdBangReceive;
+		//LibPdInstance.Float -= LibPdFloatReceive;
 		LibPdInstance.Symbol -= LibPdSymbolReceive;
 		LibPdInstance.List -= LibPdListReceive;
 		LibPdInstance.Message -= LibPdMessageReceive;
@@ -362,14 +362,14 @@ public class MainTestScript : MonoBehaviour {
 	#region libpd callbacks
 	//--------------------------------------------------------------------------
 	// Called from LibPdInstance when we receive a bang.
-	void LibPdBangReceive(string name) {
+	public void LibPdBangReceive(string name) {
 		if(name == "triggerOut")
 			WriteOutputText("triggerOut: ", "bang", "Bang\t\t\t\t\t\t\t\t");
 	}
 	
 	//--------------------------------------------------------------------------
 	// Called from LibPdInstance when we receive a float.
-	void LibPdFloatReceive(string name, float value) {
+	public void LibPdFloatReceive(string name, float value) {
 		if(name == "floatOut")
 			WriteOutputText("floatOut: ", value.ToString(), "Float\t\t\t\t\t\t\t\t");
 	}

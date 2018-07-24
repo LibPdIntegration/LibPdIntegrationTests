@@ -1446,6 +1446,37 @@ MonoBehaviour:
   patchDir: /StreamingAssets/PdAssets/
   patch: {fileID: 102900000, guid: cb222e89e61a81e4a938cbea47152347, type: 3}
   pipePrintToConsole: 1
+  Bang:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 510900105}
+        m_MethodName: LibPdBangReceive
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: StringEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+  Float:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 510900105}
+        m_MethodName: LibPdFloatReceive
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: StringFloatEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
 --- !u!82 &510900103
 AudioSource:
   m_ObjectHideFlags: 0
@@ -3666,6 +3697,15 @@ MonoBehaviour:
   patchDir: /StreamingAssets/PdAssets/
   patch: {fileID: 102900000, guid: f2db3d6b4b27ef84cacba0b1167d851b, type: 3}
   pipePrintToConsole: 1
+  Bang:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: StringEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+  Float:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: StringFloatEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
 --- !u!82 &1377208543
 AudioSource:
   m_ObjectHideFlags: 0

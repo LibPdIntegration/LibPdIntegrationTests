@@ -24,9 +24,21 @@
 using System;
 using UnityEngine;
 using UnityEditor;
+using UnityEngine.Events;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Runtime.CompilerServices;
+
+#region UnityEvent types
+//------------------------------------------------------------------------------
+/// Single string parameter event type (used for Bang events).
+[System.Serializable]
+public class StringEvent : UnityEvent<string> {}
+
+/// String + float parameter event type (used for Float events).
+[System.Serializable]
+public class StringFloatEvent : UnityEvent<string, float> {}
+#endregion
 
 /// <summary>
 /// Unity Component for running a Pure Data patch. Uses libpd's new multiple
@@ -244,9 +256,9 @@ public class LibPdInstance : MonoBehaviour {
 	private LibPdBangHook bangHook;
 
 	/// Public delegate for receiving bang events.
-	public delegate void LibPdBang(string receiver);
+	/*public delegate void LibPdBang(string receiver);
 	/// Bang event; subscribe to this to receive bangs.
-	public static event LibPdBang Bang = delegate{};
+	public static event LibPdBang Bang = delegate{};*/
 
 	//-Float hook---------------------------------------------------------------
 	[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
@@ -259,9 +271,9 @@ public class LibPdInstance : MonoBehaviour {
 	private LibPdFloatHook floatHook;
 
 	/// Public delegate for receiving float events.
-	public delegate void LibPdFloat(string receiver, float val);
-	/// Bang event; subscribe to this to receive floats.
-	public static event LibPdFloat Float = delegate{};
+	/*public delegate void LibPdFloat(string receiver, float val);
+	/// Float event; subscribe to this to receive floats.
+	public static event LibPdFloat Float = delegate{};*/
 
 	//-Symbol hook--------------------------------------------------------------
 	[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
@@ -275,7 +287,7 @@ public class LibPdInstance : MonoBehaviour {
 
 	/// Public delegate for receiving symbol events.
 	public delegate void LibPdSymbol(string receiver, string val);
-	/// Bang event; subscribe to this to receive symbols.
+	/// Symbol event; subscribe to this to receive symbols.
 	public static event LibPdSymbol Symbol = delegate{};
 
 	//-List hook----------------------------------------------------------------
@@ -291,7 +303,7 @@ public class LibPdInstance : MonoBehaviour {
 
 	/// Public delegate for receiving lists.
 	public delegate void LibPdList(string source, object[] args);
-	/// Bang event; subscribe to this to receive lists.
+	/// List event; subscribe to this to receive lists.
 	public static event LibPdList List = delegate{};
 
 	//-Message hook-------------------------------------------------------------
@@ -310,7 +322,7 @@ public class LibPdInstance : MonoBehaviour {
 	public delegate void LibPdMessage(string source,
 									  string symbol,
 									  object[] args);
-	/// Bang event; subscribe to this to messages.
+	/// Message event; subscribe to this to messages.
 	public static event LibPdMessage Message = delegate{};
 
 	//-MIDI Note On hook--------------------------------------------------------
@@ -326,7 +338,7 @@ public class LibPdInstance : MonoBehaviour {
 
 	/// Public delegate for receiving MIDI note on events.
 	public delegate void LibPdMidiNoteOn(int channel, int pitch, int velocity);
-	/// Bang event; subscribe to this to receive MIDI note on events.
+	/// MIDI Note On event; subscribe to this to receive MIDI note on events.
 	public static event LibPdMidiNoteOn MidiNoteOn = delegate {};
 
 	//-MIDI Control Change hook-------------------------------------------------
@@ -344,7 +356,7 @@ public class LibPdInstance : MonoBehaviour {
 	public delegate void LibPdMidiControlChange(int channel,
 												int controller,
 												int value);
-	/// Bang event; subscribe to this to receive MIDI control change events.
+	/// MIDI CC event; subscribe to this to receive MIDI control change events.
 	public static event LibPdMidiControlChange MidiControlChange = delegate {};
 
 	//-MIDI Program Change hook-------------------------------------------------
@@ -358,7 +370,7 @@ public class LibPdInstance : MonoBehaviour {
 
 	/// Public delegate for receiving MIDI program change events.
 	public delegate void LibPdMidiProgramChange(int channel, int program);
-	/// Bang event; subscribe to this to receive MIDI program change events.
+	/// MIDI Program Change event; subscribe to this to receive MIDI program change events.
 	public static event LibPdMidiProgramChange MidiProgramChange = delegate {};
 
 	//-MIDI Pitch Bend hook-----------------------------------------------------
@@ -372,7 +384,7 @@ public class LibPdInstance : MonoBehaviour {
 
 	/// Public delegate for receiving MIDI pitch bend events.
 	public delegate void LibPdMidiPitchBend(int channel, int value);
-	/// Bang event; subscribe to this to receive MIDI pitch bend events.
+	/// MIDI Pitch Bend event; subscribe to this to receive MIDI pitch bend events.
 	public static event LibPdMidiPitchBend MidiPitchBend = delegate {};
 
 	//-MIDI Aftertouch hook-----------------------------------------------------
@@ -386,7 +398,7 @@ public class LibPdInstance : MonoBehaviour {
 
 	/// Public delegate for receiving MIDI aftertouch events.
 	public delegate void LibPdMidiAftertouch(int channel, int value);
-	/// Bang event; subscribe to this to receive MIDI aftertouch events.
+	/// MIDI Aftertouch event; subscribe to this to receive MIDI aftertouch events.
 	public static event LibPdMidiAftertouch MidiAftertouch = delegate {};
 
 	//-MIDI Polyphonic Aftertouch hook------------------------------------------
@@ -400,7 +412,7 @@ public class LibPdInstance : MonoBehaviour {
 
 	/// Public delegate for receiving MIDI polyphonic aftertouch events.
 	public delegate void LibPdMidiPolyAftertouch(int channel, int pitch, int value);
-	/// Bang event; subscribe to this to receive MIDI polyphonic aftertouch events.
+	/// MIDI Poly Aftertouch event; subscribe to this to receive MIDI polyphonic aftertouch events.
 	public static event LibPdMidiPolyAftertouch MidiPolyAftertouch = delegate {};
 
 	//-MIDI Byte hook-----------------------------------------------------------
@@ -414,7 +426,7 @@ public class LibPdInstance : MonoBehaviour {
 
 	/// Public delegate for receiving MIDI byte events.
 	public delegate void LibPdMidiByte(int channel, int value);
-	/// Bang event; subscribe to this to receive MIDI byte events.
+	/// MIDI Byte event; subscribe to this to receive MIDI byte events.
 	public static event LibPdMidiByte MidiByte = delegate {};
 	#endregion
 
@@ -464,6 +476,15 @@ public class LibPdInstance : MonoBehaviour {
 
 	/// Global variable used to ensure we don't initialise LibPd more than once.
 	private static bool pdInitialised = false;
+	#endregion
+
+	#region events
+	//--------------------------------------------------------------------------
+	/// UnityEvent that will be invoked whenever we recieve a bang from the PD patch.
+	public StringEvent Bang;
+
+	/// UnityEvent that will be invoked whenever we recieve a float from the PD patch.
+	public StringFloatEvent Float;
 	#endregion
 	
 	#region MonoBehaviour methods
@@ -529,6 +550,11 @@ public class LibPdInstance : MonoBehaviour {
 		}
 		else
 			pipePrintToConsole = pipePrintToConsoleStatic;
+
+		if(Bang == null)
+			Bang = new StringEvent();
+		if(Float == null)
+			Float = new StringFloatEvent();
 
 		// Calc numTicks.
 		int bufferSize;
@@ -906,14 +932,14 @@ public class LibPdInstance : MonoBehaviour {
 	/// Receive bang messages.
 	void BangOutput(string symbol)
 	{
-		Bang(symbol);
+		Bang.Invoke(symbol);
 	}
 
 	//--------------------------------------------------------------------------
 	/// Receive float messages.
 	void FloatOutput(string symbol, float val)
 	{
-		Float(symbol, val);
+		Float.Invoke(symbol, val);
 	}
 
 	//--------------------------------------------------------------------------

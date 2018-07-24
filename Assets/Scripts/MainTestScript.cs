@@ -115,8 +115,8 @@ public class MainTestScript : MonoBehaviour {
 		//Libpd callback functions.
 		//LibPdInstance.Bang += LibPdBangReceive;
 		//LibPdInstance.Float += LibPdFloatReceive;
-		LibPdInstance.Symbol += LibPdSymbolReceive;
-		LibPdInstance.List += LibPdListReceive;
+		//LibPdInstance.Symbol += LibPdSymbolReceive;
+		//LibPdInstance.List += LibPdListReceive;
 		LibPdInstance.Message += LibPdMessageReceive;
 		LibPdInstance.MidiNoteOn += LibPdMidiNoteReceive;
 		LibPdInstance.MidiControlChange += LibPdMidiCcReceive;
@@ -154,8 +154,8 @@ public class MainTestScript : MonoBehaviour {
 		//Tell LibPdInstance to forget about our various receive functions.
 		//LibPdInstance.Bang -= LibPdBangReceive;
 		//LibPdInstance.Float -= LibPdFloatReceive;
-		LibPdInstance.Symbol -= LibPdSymbolReceive;
-		LibPdInstance.List -= LibPdListReceive;
+		//LibPdInstance.Symbol -= LibPdSymbolReceive;
+		//LibPdInstance.List -= LibPdListReceive;
 		LibPdInstance.Message -= LibPdMessageReceive;
 		LibPdInstance.MidiNoteOn -= LibPdMidiNoteReceive;
 		LibPdInstance.MidiControlChange -= LibPdMidiCcReceive;
@@ -376,14 +376,14 @@ public class MainTestScript : MonoBehaviour {
 	
 	//--------------------------------------------------------------------------
 	// Called from LibPdInstance when we receive a symbol.
-	void LibPdSymbolReceive(string name, string value) {
+	public void LibPdSymbolReceive(string name, string value) {
 		if(name == "stringOut")
 			WriteOutputText("stringOut: ", value, "Symbol\t\t\t\t\t\t\t");
 	}
 	
 	//--------------------------------------------------------------------------
 	// Called from LibPdInstance when we receive a list.
-	void LibPdListReceive(string name, object[] values) {
+	public void LibPdListReceive(string name, object[] values) {
 		if(name == "listOut") {
 			string tempstr = "";
 

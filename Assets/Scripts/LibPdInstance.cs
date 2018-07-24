@@ -38,6 +38,14 @@ public class StringEvent : UnityEvent<string> {}
 /// String + float parameter event type (used for Float events).
 [System.Serializable]
 public class StringFloatEvent : UnityEvent<string, float> {}
+
+/// String + string parameter event type (used for Symbol events).
+[System.Serializable]
+public class StringStringEvent : UnityEvent<string, string> {}
+
+/// String + object array parameter event type (used for List events).
+[System.Serializable]
+public class StringObjArrEvent : UnityEvent<string, object[]> {}
 #endregion
 
 /// <summary>
@@ -286,9 +294,9 @@ public class LibPdInstance : MonoBehaviour {
 	private LibPdSymbolHook symbolHook;
 
 	/// Public delegate for receiving symbol events.
-	public delegate void LibPdSymbol(string receiver, string val);
+	/*public delegate void LibPdSymbol(string receiver, string val);
 	/// Symbol event; subscribe to this to receive symbols.
-	public static event LibPdSymbol Symbol = delegate{};
+	public static event LibPdSymbol Symbol = delegate{};*/
 
 	//-List hook----------------------------------------------------------------
 	[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
@@ -302,9 +310,9 @@ public class LibPdInstance : MonoBehaviour {
 	private LibPdListHook listHook;
 
 	/// Public delegate for receiving lists.
-	public delegate void LibPdList(string source, object[] args);
+	/*public delegate void LibPdList(string source, object[] args);
 	/// List event; subscribe to this to receive lists.
-	public static event LibPdList List = delegate{};
+	public static event LibPdList List = delegate{};*/
 
 	//-Message hook-------------------------------------------------------------
 	[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
@@ -482,9 +490,12 @@ public class LibPdInstance : MonoBehaviour {
 	//--------------------------------------------------------------------------
 	/// UnityEvent that will be invoked whenever we recieve a bang from the PD patch.
 	public StringEvent Bang;
-
 	/// UnityEvent that will be invoked whenever we recieve a float from the PD patch.
 	public StringFloatEvent Float;
+	/// UnityEvent that will be invoked whenever we recieve a symbol from the PD patch.
+	public StringStringEvent Symbol;
+	/// UnityEvent that will be invoked whenever we recieve a list from the PD patch.
+	public StringObjArrEvent List;
 	#endregion
 	
 	#region MonoBehaviour methods
@@ -555,6 +566,10 @@ public class LibPdInstance : MonoBehaviour {
 			Bang = new StringEvent();
 		if(Float == null)
 			Float = new StringFloatEvent();
+		if(Symbol == null)
+			Symbol = new StringStringEvent();
+		if(List == null)
+			List = new StringObjArrEvent();
 
 		// Calc numTicks.
 		int bufferSize;
@@ -946,7 +961,7 @@ public class LibPdInstance : MonoBehaviour {
 	/// Receive symbol messages.
 	void SymbolOutput(string symbol, string val)
 	{
-		Symbol(symbol, val);
+		Symbol.Invoke(symbol, val);
 	}
 
 	//--------------------------------------------------------------------------
@@ -955,7 +970,7 @@ public class LibPdInstance : MonoBehaviour {
 	{
 		var args = ConvertList(argc, argv);
 
-		List(source, args);
+		List.Invoke(source, args);
 	}
 
 	//--------------------------------------------------------------------------

@@ -46,6 +46,10 @@ public class StringStringEvent : UnityEvent<string, string> {}
 /// String + object array parameter event type (used for List events).
 [System.Serializable]
 public class StringObjArrEvent : UnityEvent<string, object[]> {}
+
+/// String + object array parameter event type (used for Message events).
+[System.Serializable]
+public class StringStringObjArrEvent : UnityEvent<string, string, object[]> {}
 #endregion
 
 /// <summary>
@@ -327,11 +331,11 @@ public class LibPdInstance : MonoBehaviour {
 	private LibPdMessageHook messageHook;
 
 	/// Public delegate for receiving messages.
-	public delegate void LibPdMessage(string source,
+	/*public delegate void LibPdMessage(string source,
 									  string symbol,
 									  object[] args);
 	/// Message event; subscribe to this to messages.
-	public static event LibPdMessage Message = delegate{};
+	public static event LibPdMessage Message = delegate{};*/
 
 	//-MIDI Note On hook--------------------------------------------------------
 	[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
@@ -496,6 +500,8 @@ public class LibPdInstance : MonoBehaviour {
 	public StringStringEvent Symbol;
 	/// UnityEvent that will be invoked whenever we recieve a list from the PD patch.
 	public StringObjArrEvent List;
+	/// UnityEvent that will be invoked whenever we recieve a message from the PD patch.
+	public StringStringObjArrEvent Message;
 	#endregion
 	
 	#region MonoBehaviour methods
@@ -570,6 +576,8 @@ public class LibPdInstance : MonoBehaviour {
 			Symbol = new StringStringEvent();
 		if(List == null)
 			List = new StringObjArrEvent();
+		if(Message == null)
+			Message = new StringStringObjArrEvent();
 
 		// Calc numTicks.
 		int bufferSize;
@@ -979,7 +987,7 @@ public class LibPdInstance : MonoBehaviour {
 	{
 		var args = ConvertList(argc, argv);
 
-		Message(source, symbol, args);
+		Message.Invoke(source, symbol, args);
 	}
 
 	//--------------------------------------------------------------------------

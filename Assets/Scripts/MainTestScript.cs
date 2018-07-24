@@ -117,7 +117,7 @@ public class MainTestScript : MonoBehaviour {
 		//LibPdInstance.Float += LibPdFloatReceive;
 		//LibPdInstance.Symbol += LibPdSymbolReceive;
 		//LibPdInstance.List += LibPdListReceive;
-		LibPdInstance.Message += LibPdMessageReceive;
+		//LibPdInstance.Message += LibPdMessageReceive;
 		LibPdInstance.MidiNoteOn += LibPdMidiNoteReceive;
 		LibPdInstance.MidiControlChange += LibPdMidiCcReceive;
 		LibPdInstance.MidiProgramChange += LibPdMidiProgReceive;
@@ -156,7 +156,7 @@ public class MainTestScript : MonoBehaviour {
 		//LibPdInstance.Float -= LibPdFloatReceive;
 		//LibPdInstance.Symbol -= LibPdSymbolReceive;
 		//LibPdInstance.List -= LibPdListReceive;
-		LibPdInstance.Message -= LibPdMessageReceive;
+		//LibPdInstance.Message -= LibPdMessageReceive;
 		LibPdInstance.MidiNoteOn -= LibPdMidiNoteReceive;
 		LibPdInstance.MidiControlChange -= LibPdMidiCcReceive;
 		LibPdInstance.MidiProgramChange -= LibPdMidiProgReceive;
@@ -399,7 +399,7 @@ public class MainTestScript : MonoBehaviour {
 	
 	//--------------------------------------------------------------------------
 	// Called from LibPdInstance when we receive a message.
-	void LibPdMessageReceive(string name, string symbol, object[] args) {
+	public void LibPdMessageReceive(string name, string symbol, object[] args) {
 		if(name == "messageOut") {
 			string tempstr = symbol;
 

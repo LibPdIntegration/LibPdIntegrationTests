@@ -119,8 +119,8 @@ public class MainTestScript : MonoBehaviour {
 		//LibPdInstance.List += LibPdListReceive;
 		//LibPdInstance.Message += LibPdMessageReceive;
 		//LibPdInstance.MidiNoteOn += LibPdMidiNoteReceive;
-		LibPdInstance.MidiControlChange += LibPdMidiCcReceive;
-		LibPdInstance.MidiProgramChange += LibPdMidiProgReceive;
+		//LibPdInstance.MidiControlChange += LibPdMidiCcReceive;
+		//LibPdInstance.MidiProgramChange += LibPdMidiProgReceive;
 		LibPdInstance.MidiPitchBend += LibPdMidiBendReceive;
 		LibPdInstance.MidiAftertouch += LibPdMidiAftertouchReceive;
 		LibPdInstance.MidiPolyAftertouch += LibPdMidiPolyAftertouchReceive;
@@ -158,8 +158,8 @@ public class MainTestScript : MonoBehaviour {
 		//LibPdInstance.List -= LibPdListReceive;
 		//LibPdInstance.Message -= LibPdMessageReceive;
 		//LibPdInstance.MidiNoteOn -= LibPdMidiNoteReceive;
-		LibPdInstance.MidiControlChange -= LibPdMidiCcReceive;
-		LibPdInstance.MidiProgramChange -= LibPdMidiProgReceive;
+		//LibPdInstance.MidiControlChange -= LibPdMidiCcReceive;
+		//LibPdInstance.MidiProgramChange -= LibPdMidiProgReceive;
 		LibPdInstance.MidiPitchBend -= LibPdMidiBendReceive;
 		LibPdInstance.MidiAftertouch -= LibPdMidiAftertouchReceive;
 		LibPdInstance.MidiPolyAftertouch -= LibPdMidiPolyAftertouchReceive;
@@ -424,7 +424,7 @@ public class MainTestScript : MonoBehaviour {
 	
 	//--------------------------------------------------------------------------
 	// Called from LibPdInstance when we receive a MIDI CC.
-	void LibPdMidiCcReceive(int channel, int controller, int value) {
+	public void LibPdMidiCcReceive(int channel, int controller, int value) {
 		WriteOutputText("MIDI CC: ",
 						"channel = " + channel + "; controller = " + controller + "; value = " + value,
 						"MIDI CC\t\t\t\t\t\t\t");
@@ -432,7 +432,7 @@ public class MainTestScript : MonoBehaviour {
 	
 	//--------------------------------------------------------------------------
 	// Called from LibPdInstance when we receive a MIDI program change.
-	void LibPdMidiProgReceive(int channel, int program) {
+	public void LibPdMidiProgReceive(int channel, int program) {
 		WriteOutputText("MIDI Program Change: ",
 						"channel = " + channel + "; program = " + program,
 						"MIDI Program Change\t");

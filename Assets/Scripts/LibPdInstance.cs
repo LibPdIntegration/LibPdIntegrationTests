@@ -54,6 +54,10 @@ public class StringStringObjArrEvent : UnityEvent<string, string, object[]> {}
 /// Int + int + int parameter event type (used for various MIDI events).
 [System.Serializable]
 public class IntIntIntEvent : UnityEvent<int, int, int> {}
+
+/// Int + int parameter event type (used for various MIDI events).
+[System.Serializable]
+public class IntIntEvent : UnityEvent<int, int> {}
 #endregion
 
 /// <summary>
@@ -369,11 +373,11 @@ public class LibPdInstance : MonoBehaviour {
 	private LibPdMidiControlChangeHook controlChangeHook;
 
 	/// Public delegate for receiving MIDI control change events.
-	public delegate void LibPdMidiControlChange(int channel,
+	/*public delegate void LibPdMidiControlChange(int channel,
 												int controller,
 												int value);
 	/// MIDI CC event; subscribe to this to receive MIDI control change events.
-	public static event LibPdMidiControlChange MidiControlChange = delegate {};
+	public static event LibPdMidiControlChange MidiControlChange = delegate {};*/
 
 	//-MIDI Program Change hook-------------------------------------------------
 	[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
@@ -385,9 +389,9 @@ public class LibPdInstance : MonoBehaviour {
 	private LibPdMidiProgramChangeHook programChangeHook;
 
 	/// Public delegate for receiving MIDI program change events.
-	public delegate void LibPdMidiProgramChange(int channel, int program);
+	/*public delegate void LibPdMidiProgramChange(int channel, int program);
 	/// MIDI Program Change event; subscribe to this to receive MIDI program change events.
-	public static event LibPdMidiProgramChange MidiProgramChange = delegate {};
+	public static event LibPdMidiProgramChange MidiProgramChange = delegate {};*/
 
 	//-MIDI Pitch Bend hook-----------------------------------------------------
 	[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
@@ -496,22 +500,33 @@ public class LibPdInstance : MonoBehaviour {
 
 	#region events
 	//--------------------------------------------------------------------------
+	/// Events placed in a struct so they don't clutter up the Inspector by default.
 	[System.Serializable]
 	public struct PureDataEvents {
-	/// UnityEvent that will be invoked whenever we recieve a bang from the PD patch.
-	public StringEvent Bang;
-	/// UnityEvent that will be invoked whenever we recieve a float from the PD patch.
-	public StringFloatEvent Float;
-	/// UnityEvent that will be invoked whenever we recieve a symbol from the PD patch.
-	public StringStringEvent Symbol;
-	/// UnityEvent that will be invoked whenever we recieve a list from the PD patch.
-	public StringObjArrEvent List;
-	/// UnityEvent that will be invoked whenever we recieve a message from the PD patch.
-	public StringStringObjArrEvent Message;
+		/// UnityEvent that will be invoked whenever we recieve a bang from the PD patch.
+		public StringEvent Bang;
+		/// UnityEvent that will be invoked whenever we recieve a float from the PD patch.
+		public StringFloatEvent Float;
+		/// UnityEvent that will be invoked whenever we recieve a symbol from the PD patch.
+		public StringStringEvent Symbol;
+		/// UnityEvent that will be invoked whenever we recieve a list from the PD patch.
+		public StringObjArrEvent List;
+		/// UnityEvent that will be invoked whenever we recieve a message from the PD patch.
+		public StringStringObjArrEvent Message;
 	};
 	public PureDataEvents libpd2UnityEvents;
-	/// UnityEvent that will be invoked whenever we recieve a MIDI note on from the PD patch.
-	public IntIntIntEvent MidiNoteOn;
+	
+	/// Events placed in a struct so they don't clutter up the Inspector by default.
+	[System.Serializable]
+	public struct MidiEvents {
+		/// UnityEvent that will be invoked whenever we recieve a MIDI note on from the PD patch.
+		public IntIntIntEvent MidiNoteOn;
+		/// UnityEvent that will be invoked whenever we recieve a MIDI CC from the PD patch.
+		public IntIntIntEvent MidiControlChange;
+		/// UnityEvent that will be invoked whenever we recieve a MIDI program change from the PD patch.
+		public IntIntEvent MidiProgramChange;
+	};
+	public MidiEvents libpd2UnityMidiEvents;
 	#endregion
 	
 	#region MonoBehaviour methods
@@ -588,8 +603,13 @@ public class LibPdInstance : MonoBehaviour {
 			libpd2UnityEvents.List = new StringObjArrEvent();
 		if(libpd2UnityEvents.Message == null)
 			libpd2UnityEvents.Message = new StringStringObjArrEvent();
-		if(MidiNoteOn == null)
-			MidiNoteOn = new IntIntIntEvent();
+
+		if(libpd2UnityMidiEvents.MidiNoteOn == null)
+			libpd2UnityMidiEvents.MidiNoteOn = new IntIntIntEvent();
+		if(libpd2UnityMidiEvents.MidiControlChange == null)
+			libpd2UnityMidiEvents.MidiControlChange = new IntIntIntEvent();
+		if(libpd2UnityMidiEvents.MidiProgramChange == null)
+			libpd2UnityMidiEvents.MidiProgramChange = new IntIntEvent();
 
 		// Calc numTicks.
 		int bufferSize;
@@ -1006,21 +1026,21 @@ public class LibPdInstance : MonoBehaviour {
 	///	Receive MIDI note on messages.
 	void MidiNoteOnOutput(int channel, int pitch, int velocity)
 	{
-		MidiNoteOn.Invoke(channel, pitch, velocity);
+		libpd2UnityMidiEvents.MidiNoteOn.Invoke(channel, pitch, velocity);
 	}
 
 	//--------------------------------------------------------------------------
 	///	Receive MIDI control change messages.
 	void MidiControlChangeOutput(int channel, int controller, int value)
 	{
-		MidiControlChange(channel, controller, value);
+		libpd2UnityMidiEvents.MidiControlChange.Invoke(channel, controller, value);
 	}
 
 	//--------------------------------------------------------------------------
 	///	Receive MIDI program change messages.
 	void MidiProgramChangeOutput(int channel, int program)
 	{
-		MidiProgramChange(channel, program);
+		libpd2UnityMidiEvents.MidiProgramChange.Invoke(channel, program);
 	}
 
 	//--------------------------------------------------------------------------

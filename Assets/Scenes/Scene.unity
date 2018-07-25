@@ -1649,14 +1649,14 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 23b98ad798214514da9e5f53e2c0231e, type: 3}
+  m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
-  Loop: 1
+  Loop: 0
   Mute: 0
-  Spatialize: 0
-  SpatializePostEffects: 0
+  Spatialize: 1
+  SpatializePostEffects: 1
   Priority: 128
   DopplerLevel: 1
   MinDistance: 1
@@ -1783,7 +1783,7 @@ MonoBehaviour:
   libPdReceiveConsole: {fileID: 19065267}
   libpdArray: {fileID: 1015423012}
   circleScript: {fileID: 1377208541}
-  dynamicCreationPrefab: {fileID: 4948571598368180, guid: dcd2ac1ae773c544fa9c782b5a415f0e,
+  dynamicCreationPrefab: {fileID: 4996718279498380, guid: dcd2ac1ae773c544fa9c782b5a415f0e,
     type: 2}
 --- !u!1 &533437170
 GameObject:
@@ -3931,14 +3931,14 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 23b98ad798214514da9e5f53e2c0231e, type: 3}
+  m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
-  Loop: 1
+  Loop: 0
   Mute: 0
-  Spatialize: 0
-  SpatializePostEffects: 0
+  Spatialize: 1
+  SpatializePostEffects: 1
   Priority: 128
   DopplerLevel: 1
   MinDistance: 1

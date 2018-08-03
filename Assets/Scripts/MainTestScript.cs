@@ -75,6 +75,8 @@ public class MainTestScript : MonoBehaviour {
 	public Button dynamicCreationButton;
 	// The button we listen to for triggering the automated tests.
 	public Button automatedTestsButton;
+	// The button we listen to for triggering a print message.
+	public Button printButton;
 
 	// We use this to display the list/message/etc. we're sending to the PD patch.
 	public Text statusBar;
@@ -132,6 +134,7 @@ public class MainTestScript : MonoBehaviour {
 		spatialiseButton.onClick.AddListener(() => ButtonCallback(spatialiseButton));
 		dynamicCreationButton.onClick.AddListener(() => ButtonCallback(dynamicCreationButton));
 		automatedTestsButton.onClick.AddListener(() => ButtonCallback(automatedTestsButton));
+		printButton.onClick.AddListener(() => ButtonCallback(printButton));
 	}
 	
 	//--------------------------------------------------------------------------
@@ -309,6 +312,10 @@ public class MainTestScript : MonoBehaviour {
 			}
 
 			StartCoroutine("AutomatedTests");
+		}
+		else if(b == printButton) {
+			WriteInputText("Sent printIn: ", "This is a print test.");
+			mainPatch.SendSymbol("printIn", "This is a print test.");
 		}
 	}
 	
@@ -498,6 +505,9 @@ public class MainTestScript : MonoBehaviour {
 		yield return new WaitForSeconds(1.0f);
 
 		ButtonCallback(dynamicCreationButton);
+		yield return null;
+
+		ButtonCallback(printButton);
 		yield return null;
 	}
 

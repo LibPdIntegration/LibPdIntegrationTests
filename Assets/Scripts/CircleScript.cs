@@ -1,6 +1,6 @@
 ﻿// CircleMotion.cs - Script used to move an object in a circle.
 // -----------------------------------------------------------------------------
-// Copyright (c) 2018 Niall Moody
+// Copyright (c) 2019 Niall Moody
 // 
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -26,7 +26,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// Script used to move an object in a circle.
-public class CircleScript : MonoBehaviour {
+public class CircleScript : MonoBehaviour
+{
 
 	// Our PD spatialise test patch.
 	public LibPdInstance spatialisePatch;
@@ -38,21 +39,19 @@ public class CircleScript : MonoBehaviour {
 	float index;
 	// True if the sphere is moving.
 	bool moving;
-
-	// Use this for initialization
-	void Start () {
-		
-	}
 	
 	// Update is called once per frame
-	void Update () {
-		if(moving) {
+	void Update ()
+	{
+		if(moving)
+		{
 			Vector3 tempPos = new Vector3(Mathf.Sin(index) * 10.0f, 0.0f, -10.0f - Mathf.Cos(index) * 10.0f);
 
 			sphereTransform.position = tempPos;
 
 			index += 0.01f;
-			if(index > (Mathf.PI * 2.0f)) {
+			if(index > (Mathf.PI * 2.0f))
+			{
 				moving = false;
 				index = 0.0f;
 				spatialisePatch.SendFloat("level", 0.0f);
@@ -62,7 +61,8 @@ public class CircleScript : MonoBehaviour {
 	}
 
 	// Call this to trigger the spatialised sound to circle round the origin.
-	public void Trigger() {
+	public void Trigger()
+	{
 		moving = true;
 		spatialisePatch.SendFloat("level", 1.0f);
 		spatialisePatch.SendFloat("toggle", 1.0f);

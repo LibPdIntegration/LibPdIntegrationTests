@@ -1,6 +1,6 @@
 ﻿// MainTestScript.cs - Script for triggering all the tests.
 // -----------------------------------------------------------------------------
-// Copyright (c) 2018 Niall Moody
+// Copyright (c) 2019 Niall Moody
 // 
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -28,7 +28,8 @@ using UnityEngine;
 using UnityEngine.UI;
 
 /// Script for triggering all the tests.
-public class MainTestScript : MonoBehaviour {
+public class MainTestScript : MonoBehaviour
+{
 
 	#region Variables
 	// Our main PD test patch.
@@ -106,7 +107,8 @@ public class MainTestScript : MonoBehaviour {
 	#region Monobehaviour methods
 	//--------------------------------------------------------------------------
 	// Use this for initialization
-	void Start () {
+	void Start ()
+	{
 		//Libpd bindings.
 		mainPatch.Bind("triggerOut");
 		mainPatch.Bind("floatOut");
@@ -139,7 +141,8 @@ public class MainTestScript : MonoBehaviour {
 	
 	//--------------------------------------------------------------------------
 	// Update is called once per frame
-	void Update () {
+	void Update ()
+	{
 		
 	}
 	#endregion
@@ -147,56 +150,70 @@ public class MainTestScript : MonoBehaviour {
 	#region UI callbacks
 	//--------------------------------------------------------------------------
 	// Called when we click on the bang button.
-	private void ButtonCallback(Button b) {
-		if(b == bangButton) {
+	private void ButtonCallback(Button b)
+	{
+		if(b == bangButton)
+		{
 			WriteInputText("Sent triggerIn: ", "bang");
 			mainPatch.SendBang("triggerIn");
 		}
-		else if(b == listButton) {
+		else if(b == listButton)
+		{
 			WriteInputText("Sent listIn: ", "0; 15.99; test;");
 			mainPatch.SendList("listIn", 0, 15.99, "test");
 		}
-		else if(b == messageButton) {
+		else if(b == messageButton)
+		{
 			WriteInputText("Sent messageIn: ", "test 1;");
 			mainPatch.SendMessage("messageIn", "test", 1);
 		}
-		else if(b == midiNoteButton) {
+		else if(b == midiNoteButton)
+		{
 			WriteInputText("Sent MIDI Note: ", "channel = 0; note = 60; velocity = 127");
 			mainPatch.SendMidiNoteOn(0, 60, 127);
 		}
-		else if(b == midiCcButton) {
+		else if(b == midiCcButton)
+		{
 			WriteInputText("Sent MIDI CC: ", "channel = 0; controller = 0; value = 127");
 			mainPatch.SendMidiCc(0, 0, 127);
 		}
-		else if(b == midiProgButton) {
+		else if(b == midiProgButton)
+		{
 			WriteInputText("Sent MIDI Program Change: ", "channel = 0; program = 0");
 			mainPatch.SendMidiProgramChange(0, 0);
 		}
-		else if(b == midiBendButton) {
+		else if(b == midiBendButton)
+		{
 			WriteInputText("Sent MIDI Pitch Bend: ", "channel = 0; value = 8191");
 			mainPatch.SendMidiPitchBend(0, 8191);
 		}
-		else if(b == midiAftertouchButton) {
+		else if(b == midiAftertouchButton)
+		{
 			WriteInputText("Sent MIDI Aftertouch: ", "channel = 0; value = 127");
 			mainPatch.SendMidiAftertouch(0, 127);
 		}
-		else if(b == midiPolyAftertouchButton) {
+		else if(b == midiPolyAftertouchButton)
+		{
 			WriteInputText("Sent MIDI Poly Aftertouch: ", "channel = 0; note = 60; value = 127");
 			mainPatch.SendMidiPolyAftertouch(0, 60, 127);
 		}
-		else if(b == midiByteButton) {
+		else if(b == midiByteButton)
+		{
 			WriteInputText("Sent MIDI Byte: ", "port = 0; value = 127");
 			mainPatch.SendMidiByte(0, 127);
 		}
-		else if(b == midiSysexButton) {
+		else if(b == midiSysexButton)
+		{
 			WriteInputText("Sent MIDI Sysex: ", "port = 0; value = 127");
 			mainPatch.SendMidiSysex(0, 127);
 		}
-		else if(b == midiRealtimeButton) {
+		else if(b == midiRealtimeButton)
+		{
 			WriteInputText("Sent MIDI Realtime: ", "port = 0; value = 250");
 			mainPatch.SendMidiSysRealtime(0, 250);
 		}
-		else if(b == arrayRandomButton) {
+		else if(b == arrayRandomButton)
+		{
 			float[] tempArr = new float[] {Random.Range(-1.0f, 1.0f),
 										   Random.Range(-1.0f, 1.0f),
 										   Random.Range(-1.0f, 1.0f),
@@ -209,7 +226,8 @@ public class MainTestScript : MonoBehaviour {
 										   Random.Range(-1.0f, 1.0f)};
 
 			string arrayData = "";
-			if(writeToFile) {
+			if(writeToFile)
+			{
 				for(int i=0;i<10;++i)
 					arrayData += tempArr[i].ToString() + " ";
 			}
@@ -221,14 +239,16 @@ public class MainTestScript : MonoBehaviour {
 				tempArr[i] = 0.0f;
 			mainPatch.ReadArray(tempArr, "TestArray", 0, 10);
 
-			for(int i=0;i<10;++i) {
+			for(int i=0;i<10;++i)
+			{
 				libpdArray.SetPosition(i,
 									   new Vector3((float)i * 40.0f,
 												   tempArr[i] * 100.0f,
 												   0.0f));
 			}
 
-			if(writeToFile) {
+			if(writeToFile)
+			{
 				arrayData = "";
 				for(int i=0;i<10;++i)
 					arrayData += tempArr[i].ToString() + " ";
@@ -241,15 +261,18 @@ public class MainTestScript : MonoBehaviour {
 					AddToConsole("Random Array\t\t\t\t\t" + " <color=red>FAILED</color>");
 			}
 		}
-		else if(b == arraySineButton) {
+		else if(b == arraySineButton)
+		{
 			float[] tempArr = new float[10];
 
-			for(int i=0;i<10;++i) {
+			for(int i=0;i<10;++i)
+			{
 				tempArr[i] = Mathf.Sin(((float)i/9.0f) * 2.0f * Mathf.PI);
 			}
 
 			string arrayData = "";
-			if(writeToFile) {
+			if(writeToFile)
+			{
 				for(int i=0;i<10;++i)
 					arrayData += tempArr[i].ToString() + " ";
 			}
@@ -261,14 +284,16 @@ public class MainTestScript : MonoBehaviour {
 				tempArr[i] = 0.0f;
 			mainPatch.ReadArray(tempArr, "TestArray", 0, 10);
 
-			for(int i=0;i<10;++i) {
+			for(int i=0;i<10;++i)
+			{
 				libpdArray.SetPosition(i,
 									   new Vector3((float)i * 40.0f,
 												   tempArr[i] * 100.0f,
 												   0.0f));
 			}
 
-			if(writeToFile) {
+			if(writeToFile)
+			{
 				arrayData = "";
 				for(int i=0;i<10;++i)
 					arrayData += tempArr[i].ToString() + " ";
@@ -281,18 +306,22 @@ public class MainTestScript : MonoBehaviour {
 					AddToConsole("Sine Array\t\t\t\t\t\t" + " <color=red>FAILED</color>");
 			}
 		}
-		else if(b == spatialiseButton) {
+		else if(b == spatialiseButton)
+		{
 			statusBar.text = "Running spatialisation test";
 			circleScript.Trigger();
 		}
-		else if(b == dynamicCreationButton) {
-			if(dynamicCreationButton.GetComponentInChildren<Text>().text == "Dynamic Creation") {
+		else if(b == dynamicCreationButton)
+		{
+			if(dynamicCreationButton.GetComponentInChildren<Text>().text == "Dynamic Creation")
+			{
 				Instantiate(dynamicCreationPrefab, new Vector3(0.0f, 0.0f, 0.0f), Quaternion.identity);	
 
 				dynamicCreationButton.GetComponentInChildren<Text>().text = "Dynamic Deletion";
 				statusBar.text = "Instantiated LibPdInstance prefab";
 			}
-			else {
+			else
+		{
 				GameObject obj = GameObject.Find("DynamicCreationSphere(Clone)");
 
 				if(obj)
@@ -302,33 +331,41 @@ public class MainTestScript : MonoBehaviour {
 				statusBar.text = "Deleted LibPdInstance instance";
 			}
 		}
-		else if(b == automatedTestsButton) {
+		else if(b == automatedTestsButton)
+		{
 			writeToFile = true;
 			testFilePath = Path.GetFullPath(".") + "\\TestResults " + System.DateTime.Now.ToString("dd.MM.yyy - H.mm.ss") + ".txt";
 
-			if(!File.Exists(testFilePath)) {
+			if(!File.Exists(testFilePath))
+			{
 				testWriter = new StreamWriter(File.Create(testFilePath));
 				testWriter.AutoFlush = true;
 			}
 
 			StartCoroutine("AutomatedTests");
 		}
-		else if(b == printButton) {
+		else if(b == printButton)
+		{
 			WriteInputText("Sent printIn: ", "This is a print test.");
 			mainPatch.SendSymbol("printIn", "This is a print test.");
+
+			if(writeToFile)
+				writeToFile = false;
 		}
 	}
 	
 	//--------------------------------------------------------------------------
 	// Called when we drag the float slider.
-	private void SliderCallback(float value) {
+	private void SliderCallback(float value)
+	{
 		WriteInputText("Sent floatIn: ", value.ToString());
 		mainPatch.SendFloat("floatIn", value);
 	}
 	
 	//--------------------------------------------------------------------------
 	// Called when we enter text into the symbol editor.
-	private void SymbolCallback(string value) {
+	private void SymbolCallback(string value)
+	{
 		WriteInputText("Sent stringIn: ", value);
 		mainPatch.SendSymbol("stringIn", value);
 	}
@@ -449,7 +486,8 @@ public class MainTestScript : MonoBehaviour {
 	#region Misc
 	//--------------------------------------------------------------------------
 	// Coroutine used to run the automated tests.
-	IEnumerator AutomatedTests() {
+	IEnumerator AutomatedTests()
+	{
 		ButtonCallback(bangButton);
 		yield return null;
 
@@ -513,9 +551,11 @@ public class MainTestScript : MonoBehaviour {
 
 	//--------------------------------------------------------------------------
 	// Helper method. Handles the console output.
-	void AddToConsole(string text) {
+	void AddToConsole(string text)
+	{
 		//Check whether we need to add a new line.
-		if(libPdReceiveConsole.text.Length > 0) {
+		if(libPdReceiveConsole.text.Length > 0)
+		{
 			libPdReceiveConsole.text += "\n";
 		}
 
@@ -524,7 +564,8 @@ public class MainTestScript : MonoBehaviour {
 		//Check whether we need to delete the oldest line.
 		int numLines = libPdReceiveConsole.text.Split('\n').Length - 1;
 
-		if(numLines > 15) {
+		if(numLines > 15)
+		{
 			string tempstr = libPdReceiveConsole.text;
 
 			while(numLines > 15)
@@ -540,7 +581,8 @@ public class MainTestScript : MonoBehaviour {
 
 	//--------------------------------------------------------------------------
 	// Helper method. Writes text to the status bar and/or a test file.
-	void WriteInputText(string preamble, string text) {
+	void WriteInputText(string preamble, string text)
+	{
 		if(writeToFile) 
 		{
 			testInput = text;
@@ -553,8 +595,10 @@ public class MainTestScript : MonoBehaviour {
 
 	//--------------------------------------------------------------------------
 	// Helper method. Writes text to the console and/or a test file.
-	void WriteOutputText(string preamble, string text, string test) {
-		if(writeToFile) {
+	void WriteOutputText(string preamble, string text, string test)
+	{
+		if(writeToFile)
+		{
 			if(text == testInput)
 				AddToConsole(test + " <color=green>PASSED</color>");
 			else

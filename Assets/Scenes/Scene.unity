@@ -1443,7 +1443,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   patchName: TestMain
-  patchDir: /StreamingAssets/PdAssets/
+  patchDir: /PdAssets/
   patch: {fileID: 102900000, guid: cb222e89e61a81e4a938cbea47152347, type: 3}
   pipePrintToConsole: 1
   pureDataEvents:
@@ -4043,7 +4043,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   patchName: SpatialiseTest
-  patchDir: /StreamingAssets/PdAssets/
+  patchDir: /PdAssets/
   patch: {fileID: 102900000, guid: f2db3d6b4b27ef84cacba0b1167d851b, type: 3}
   pipePrintToConsole: 1
   pureDataEvents:

@@ -1,6 +1,6 @@
 ﻿// GameManager.cs - Script used to let the player quit by pressing Escape.
 // -----------------------------------------------------------------------------
-// Copyright (c) 2018 Niall Moody
+// Copyright (c) 2019 Niall Moody
 // 
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -27,17 +27,15 @@ using UnityEngine;
 
 //------------------------------------------------------------------------------
 /// Script used to let the player quit by pressing Escape.
-public class GameManager : MonoBehaviour {
-	
-	//--------------------------------------------------------------------------
-	// Use this for initialization
-	void Start () {
-	}
+public class GameManager : MonoBehaviour
+{
 	
 	//--------------------------------------------------------------------------
 	// Update is called once per frame
-	void Update () {
-		if(Input.GetButton("Quit")) {
+	void Update ()
+	{
+		if(Input.GetButton("Quit"))
+		{
 			 Application.Quit();
 		}
 	}

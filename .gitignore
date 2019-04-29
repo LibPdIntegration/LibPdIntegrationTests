@@ -1,0 +1,8 @@
+TestResults*
+Builds/*
+Library/*
+Packages/*
+docs/*
+obj/*
+videos/*
+.vs/*

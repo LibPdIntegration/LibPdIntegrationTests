@@ -78,6 +78,8 @@ public class MainTestScript : MonoBehaviour
 	public Button automatedTestsButton;
 	// The button we listen to for triggering a print message.
 	public Button printButton;
+	// The button we listen to for triggering the 64-bit wrap~ test.
+	public Button wrapTestButton;
 
 	// We use this to display the list/message/etc. we're sending to the PD patch.
 	public Text statusBar;
@@ -92,6 +94,8 @@ public class MainTestScript : MonoBehaviour
 	public CircleScript circleScript;
 	// The prefab we're going to use to test dynamic creation.
 	public Transform dynamicCreationPrefab;
+	// The prefab we're going to use to test 64-bit compatibility.
+	public Transform wrapTestPrefab;
 
 	// Used to write test results to a text file.
 	private bool writeToFile;
@@ -137,6 +141,7 @@ public class MainTestScript : MonoBehaviour
 		dynamicCreationButton.onClick.AddListener(() => ButtonCallback(dynamicCreationButton));
 		automatedTestsButton.onClick.AddListener(() => ButtonCallback(automatedTestsButton));
 		printButton.onClick.AddListener(() => ButtonCallback(printButton));
+		wrapTestButton.onClick.AddListener(() => ButtonCallback(wrapTestButton));
 	}
 	
 	//--------------------------------------------------------------------------
@@ -154,63 +159,63 @@ public class MainTestScript : MonoBehaviour
 	{
 		if(b == bangButton)
 		{
-			WriteInputText("Sent triggerIn: ", "bang");
+			WriteInputText("Sent triggerIn: ","bang");
 			mainPatch.SendBang("triggerIn");
 		}
 		else if(b == listButton)
 		{
-			WriteInputText("Sent listIn: ", "0; 15.99; test;");
-			mainPatch.SendList("listIn", 0, 15.99, "test");
+			WriteInputText("Sent listIn: ","0; 15.99; test;");
+			mainPatch.SendList("listIn",0,15.99,"test");
 		}
 		else if(b == messageButton)
 		{
-			WriteInputText("Sent messageIn: ", "test 1;");
-			mainPatch.SendMessage("messageIn", "test", 1);
+			WriteInputText("Sent messageIn: ","test 1;");
+			mainPatch.SendMessage("messageIn","test",1);
 		}
 		else if(b == midiNoteButton)
 		{
-			WriteInputText("Sent MIDI Note: ", "channel = 0; note = 60; velocity = 127");
-			mainPatch.SendMidiNoteOn(0, 60, 127);
+			WriteInputText("Sent MIDI Note: ","channel = 0; note = 60; velocity = 127");
+			mainPatch.SendMidiNoteOn(0,60,127);
 		}
 		else if(b == midiCcButton)
 		{
-			WriteInputText("Sent MIDI CC: ", "channel = 0; controller = 0; value = 127");
-			mainPatch.SendMidiCc(0, 0, 127);
+			WriteInputText("Sent MIDI CC: ","channel = 0; controller = 0; value = 127");
+			mainPatch.SendMidiCc(0,0,127);
 		}
 		else if(b == midiProgButton)
 		{
-			WriteInputText("Sent MIDI Program Change: ", "channel = 0; program = 0");
-			mainPatch.SendMidiProgramChange(0, 0);
+			WriteInputText("Sent MIDI Program Change: ","channel = 0; program = 0");
+			mainPatch.SendMidiProgramChange(0,0);
 		}
 		else if(b == midiBendButton)
 		{
-			WriteInputText("Sent MIDI Pitch Bend: ", "channel = 0; value = 8191");
-			mainPatch.SendMidiPitchBend(0, 8191);
+			WriteInputText("Sent MIDI Pitch Bend: ","channel = 0; value = 8191");
+			mainPatch.SendMidiPitchBend(0,8191);
 		}
 		else if(b == midiAftertouchButton)
 		{
-			WriteInputText("Sent MIDI Aftertouch: ", "channel = 0; value = 127");
-			mainPatch.SendMidiAftertouch(0, 127);
+			WriteInputText("Sent MIDI Aftertouch: ","channel = 0; value = 127");
+			mainPatch.SendMidiAftertouch(0,127);
 		}
 		else if(b == midiPolyAftertouchButton)
 		{
-			WriteInputText("Sent MIDI Poly Aftertouch: ", "channel = 0; note = 60; value = 127");
-			mainPatch.SendMidiPolyAftertouch(0, 60, 127);
+			WriteInputText("Sent MIDI Poly Aftertouch: ","channel = 0; note = 60; value = 127");
+			mainPatch.SendMidiPolyAftertouch(0,60,127);
 		}
 		else if(b == midiByteButton)
 		{
-			WriteInputText("Sent MIDI Byte: ", "port = 0; value = 127");
-			mainPatch.SendMidiByte(0, 127);
+			WriteInputText("Sent MIDI Byte: ","port = 0; value = 127");
+			mainPatch.SendMidiByte(0,127);
 		}
 		else if(b == midiSysexButton)
 		{
-			WriteInputText("Sent MIDI Sysex: ", "port = 0; value = 127");
-			mainPatch.SendMidiSysex(0, 127);
+			WriteInputText("Sent MIDI Sysex: ","port = 0; value = 127");
+			mainPatch.SendMidiSysex(0,127);
 		}
 		else if(b == midiRealtimeButton)
 		{
-			WriteInputText("Sent MIDI Realtime: ", "port = 0; value = 250");
-			mainPatch.SendMidiSysRealtime(0, 250);
+			WriteInputText("Sent MIDI Realtime: ","port = 0; value = 250");
+			mainPatch.SendMidiSysRealtime(0,250);
 		}
 		else if(b == arrayRandomButton)
 		{
@@ -228,18 +233,18 @@ public class MainTestScript : MonoBehaviour
 			string arrayData = "";
 			if(writeToFile)
 			{
-				for(int i=0;i<10;++i)
+				for(int i = 0;i<10;++i)
 					arrayData += tempArr[i].ToString() + " ";
 			}
 
-			WriteInputText("Sent random array data:", arrayData);
-			mainPatch.WriteArray("TestArray", 0, tempArr, 10);
+			WriteInputText("Sent random array data:",arrayData);
+			mainPatch.WriteArray("TestArray",0,tempArr,10);
 
-			for(int i=0;i<10;++i)
+			for(int i = 0;i<10;++i)
 				tempArr[i] = 0.0f;
-			mainPatch.ReadArray(tempArr, "TestArray", 0, 10);
+			mainPatch.ReadArray(tempArr,"TestArray",0,10);
 
-			for(int i=0;i<10;++i)
+			for(int i = 0;i<10;++i)
 			{
 				libpdArray.SetPosition(i,
 									   new Vector3((float)i * 40.0f,
@@ -250,9 +255,9 @@ public class MainTestScript : MonoBehaviour
 			if(writeToFile)
 			{
 				arrayData = "";
-				for(int i=0;i<10;++i)
+				for(int i = 0;i<10;++i)
 					arrayData += tempArr[i].ToString() + " ";
-				
+
 				testWriter.WriteLine("Received Random array:\r\n" + arrayData);
 
 				if(arrayData == testInput)
@@ -265,7 +270,7 @@ public class MainTestScript : MonoBehaviour
 		{
 			float[] tempArr = new float[10];
 
-			for(int i=0;i<10;++i)
+			for(int i = 0;i<10;++i)
 			{
 				tempArr[i] = Mathf.Sin(((float)i/9.0f) * 2.0f * Mathf.PI);
 			}
@@ -273,18 +278,18 @@ public class MainTestScript : MonoBehaviour
 			string arrayData = "";
 			if(writeToFile)
 			{
-				for(int i=0;i<10;++i)
+				for(int i = 0;i<10;++i)
 					arrayData += tempArr[i].ToString() + " ";
 			}
 
-			WriteInputText("Sent sine wave array data:", arrayData);
-			mainPatch.WriteArray("TestArray", 0, tempArr, 10);
+			WriteInputText("Sent sine wave array data:",arrayData);
+			mainPatch.WriteArray("TestArray",0,tempArr,10);
 
-			for(int i=0;i<10;++i)
+			for(int i = 0;i<10;++i)
 				tempArr[i] = 0.0f;
-			mainPatch.ReadArray(tempArr, "TestArray", 0, 10);
+			mainPatch.ReadArray(tempArr,"TestArray",0,10);
 
-			for(int i=0;i<10;++i)
+			for(int i = 0;i<10;++i)
 			{
 				libpdArray.SetPosition(i,
 									   new Vector3((float)i * 40.0f,
@@ -295,7 +300,7 @@ public class MainTestScript : MonoBehaviour
 			if(writeToFile)
 			{
 				arrayData = "";
-				for(int i=0;i<10;++i)
+				for(int i = 0;i<10;++i)
 					arrayData += tempArr[i].ToString() + " ";
 
 				testWriter.WriteLine("Received Sine array:\r\n" + arrayData);
@@ -315,13 +320,13 @@ public class MainTestScript : MonoBehaviour
 		{
 			if(dynamicCreationButton.GetComponentInChildren<Text>().text == "Dynamic Creation")
 			{
-				Instantiate(dynamicCreationPrefab, new Vector3(0.0f, 0.0f, 0.0f), Quaternion.identity);	
+				Instantiate(dynamicCreationPrefab,new Vector3(0.0f,0.0f,0.0f),Quaternion.identity);
 
 				dynamicCreationButton.GetComponentInChildren<Text>().text = "Dynamic Deletion";
 				statusBar.text = "Instantiated LibPdInstance prefab";
 			}
 			else
-		{
+			{
 				GameObject obj = GameObject.Find("DynamicCreationSphere(Clone)");
 
 				if(obj)
@@ -346,11 +351,31 @@ public class MainTestScript : MonoBehaviour
 		}
 		else if(b == printButton)
 		{
-			WriteInputText("Sent printIn: ", "This is a print test.");
-			mainPatch.SendSymbol("printIn", "This is a print test.");
+			WriteInputText("Sent printIn: ","This is a print test.");
+			mainPatch.SendSymbol("printIn","This is a print test.");
 
 			if(writeToFile)
 				writeToFile = false;
+		}
+		else if(b == wrapTestButton)
+		{
+			if(wrapTestButton.GetComponentInChildren<Text>().text == "Start 64-bit Patch")
+			{
+				Instantiate(wrapTestPrefab,new Vector3(0.0f,0.0f,0.0f),Quaternion.identity);
+
+				wrapTestButton.GetComponentInChildren<Text>().text = "Stop 64-bit Patch";
+				statusBar.text = "Instantiated LibPdInstance 64-bit test prefab";
+			}
+			else
+			{
+				GameObject obj = GameObject.Find("WrapTest(Clone)");
+
+				if(obj)
+					Destroy(obj);
+
+				wrapTestButton.GetComponentInChildren<Text>().text = "Start 64-bit Patch";
+				statusBar.text = "Deleted LibPdInstance 64-bit test instance";
+			}
 		}
 	}
 	

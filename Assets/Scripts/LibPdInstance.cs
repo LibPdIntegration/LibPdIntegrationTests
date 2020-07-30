@@ -639,7 +639,7 @@ public class LibPdInstance : MonoBehaviour
 	
 	//--------------------------------------------------------------------------
 	/// Close the patch file on quit.
-	void OnApplicationQuit()
+	void OnDestroy()
 	{
 		//Remove from our list of active instances before we do anything else.
 		activeInstances.Remove(this);

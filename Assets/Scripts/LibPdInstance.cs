@@ -677,6 +677,8 @@ public class LibPdInstance : MonoBehaviour
 			bindings.Clear();
 
 			libpd_closefile(patchPointer);
+
+			libpd_free_instance(instance);
 		}
 
 		//If we're the last instance left, release libpd's ringbuffer.

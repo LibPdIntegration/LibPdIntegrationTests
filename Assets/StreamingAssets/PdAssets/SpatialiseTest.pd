@@ -1,5 +1,5 @@
-#N canvas 295 50 463 487 10;
-#X obj 13 219 dac~;
+#N canvas 829 101 463 603 10;
+#X obj 13 274 dac~;
 #X obj 13 180 *~;
 #X obj 31 161 receive level;
 #X obj 13 28 metro 250;
@@ -12,8 +12,11 @@
 #X msg 149 165 0;
 #X obj 149 148 loadbang;
 #X obj 13 5 receive toggle;
-#X connect 1 0 0 0;
-#X connect 1 0 0 1;
+#X obj 31 198 adc~;
+#X obj 13 234 *~;
+#X obj 38 243 *~;
+#X connect 1 0 14 0;
+#X connect 1 0 15 0;
 #X connect 2 0 1 1;
 #X connect 3 0 7 0;
 #X connect 3 0 9 0;
@@ -26,3 +29,7 @@
 #X connect 10 0 1 1;
 #X connect 11 0 10 0;
 #X connect 12 0 3 0;
+#X connect 13 0 14 1;
+#X connect 13 1 15 1;
+#X connect 14 0 0 0;
+#X connect 15 0 0 1;

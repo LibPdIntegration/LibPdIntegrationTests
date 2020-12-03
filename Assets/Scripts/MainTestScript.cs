@@ -261,9 +261,9 @@ public class MainTestScript : MonoBehaviour
 				testWriter.WriteLine("Received Random array:\r\n" + arrayData);
 
 				if(arrayData == testInput)
-					AddToConsole("Random Array\t\t\t\t\t" + " <color=green>PASSED</color>");
+					AddToConsole("Random Array\t\t\t\t" + " <color=green>PASSED</color>");
 				else
-					AddToConsole("Random Array\t\t\t\t\t" + " <color=red>FAILED</color>");
+					AddToConsole("Random Array\t\t\t\t" + " <color=red>FAILED</color>");
 			}
 		}
 		else if(b == arraySineButton)
@@ -306,9 +306,9 @@ public class MainTestScript : MonoBehaviour
 				testWriter.WriteLine("Received Sine array:\r\n" + arrayData);
 
 				if(arrayData == testInput)
-					AddToConsole("Sine Array\t\t\t\t\t\t" + " <color=green>PASSED</color>");
+					AddToConsole("Sine Array\t\t\t\t\t" + " <color=green>PASSED</color>");
 				else
-					AddToConsole("Sine Array\t\t\t\t\t\t" + " <color=red>FAILED</color>");
+					AddToConsole("Sine Array\t\t\t\t\t" + " <color=red>FAILED</color>");
 			}
 		}
 		else if(b == spatialiseButton)
@@ -401,14 +401,14 @@ public class MainTestScript : MonoBehaviour
 	// Called from LibPdInstance when we receive a bang.
 	public void LibPdBangReceive(string name) {
 		if(name == "triggerOut")
-			WriteOutputText("triggerOut: ", "bang", "Bang\t\t\t\t\t\t\t\t");
+			WriteOutputText("triggerOut: ", "bang", "Bang\t\t\t\t\t\t\t");
 	}
 	
 	//--------------------------------------------------------------------------
 	// Called from LibPdInstance when we receive a float.
 	public void LibPdFloatReceive(string name, float value) {
 		if(name == "floatOut")
-			WriteOutputText("floatOut: ", value.ToString(), "Float\t\t\t\t\t\t\t\t");
+			WriteOutputText("floatOut: ", value.ToString(), "Float\t\t\t\t\t\t\t");
 	}
 	
 	//--------------------------------------------------------------------------
@@ -430,7 +430,7 @@ public class MainTestScript : MonoBehaviour
 				tempstr += value + ";";
 			}
 
-			WriteOutputText("listOut: ", tempstr, "List\t\t\t\t\t\t\t\t\t");
+			WriteOutputText("listOut: ", tempstr, "List\t\t\t\t\t\t\t\t");
 		}
 	}
 	
@@ -447,7 +447,7 @@ public class MainTestScript : MonoBehaviour
 			}
 			tempstr += ";";
 
-			WriteOutputText("messageOut: ", tempstr, "Message\t\t\t\t\t\t\t");
+			WriteOutputText("messageOut: ", tempstr, "Message\t\t\t\t\t\t");
 		}
 	}
 	
@@ -456,7 +456,7 @@ public class MainTestScript : MonoBehaviour
 	public void LibPdMidiNoteReceive(int channel, int pitch, int velocity) {
 		WriteOutputText("MIDI Note: ",
 						"channel = " + channel + "; note = " + pitch + "; velocity = " + velocity,
-						"MIDI Note\t\t\t\t\t\t");
+						"MIDI Note\t\t\t\t\t");
 	}
 	
 	//--------------------------------------------------------------------------
@@ -464,7 +464,7 @@ public class MainTestScript : MonoBehaviour
 	public void LibPdMidiCcReceive(int channel, int controller, int value) {
 		WriteOutputText("MIDI CC: ",
 						"channel = " + channel + "; controller = " + controller + "; value = " + value,
-						"MIDI CC\t\t\t\t\t\t\t");
+						"MIDI CC\t\t\t\t\t\t");
 	}
 	
 	//--------------------------------------------------------------------------
@@ -480,7 +480,7 @@ public class MainTestScript : MonoBehaviour
 	public void LibPdMidiBendReceive(int channel, int value) {
 		WriteOutputText("MIDI Pitch Bend: ",
 						"channel = " + channel + "; value = " + value,
-						"MIDI Pitch Bend\t\t\t\t");
+						"MIDI Pitch Bend\t\t\t");
 	}
 	
 	//--------------------------------------------------------------------------
@@ -488,7 +488,7 @@ public class MainTestScript : MonoBehaviour
 	public void LibPdMidiAftertouchReceive(int channel, int value) {
 		WriteOutputText("MIDI Aftertouch: ",
 						"channel = " + channel + "; value = " + value,
-						"MIDI Aftertouch\t\t\t\t");
+						"MIDI Aftertouch\t\t\t");
 	}
 	
 	//--------------------------------------------------------------------------
@@ -496,7 +496,7 @@ public class MainTestScript : MonoBehaviour
 	public void LibPdMidiPolyAftertouchReceive(int channel, int note, int value) {
 		WriteOutputText("MIDI Poly Aftertouch: ",
 						"channel = " + channel + "; note = " + note + "; value = " + value,
-						"MIDI Poly Aftertouch\t\t");
+						"MIDI Poly Aftertouch\t");
 	}
 	
 	//--------------------------------------------------------------------------

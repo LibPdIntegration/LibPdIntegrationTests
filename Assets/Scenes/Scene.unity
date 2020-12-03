@@ -5699,7 +5699,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Unity -> libpd
+  m_Text: "Unity \u2192 libpd"
 --- !u!222 &1648437166
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -6519,7 +6519,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: libpd -> Unity
+  m_Text: "libpd \u2192 Unity"
 --- !u!222 &1887384233
 CanvasRenderer:
   m_ObjectHideFlags: 0

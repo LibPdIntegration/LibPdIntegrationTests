@@ -1,4 +1,4 @@
-#N canvas 230 50 1135 713 10;
+#N canvas 597 53 1135 713 10;
 #X obj 6 18 receive triggerIn;
 #X obj 6 39 send triggerOut;
 #X text 6 1 Bang test;
